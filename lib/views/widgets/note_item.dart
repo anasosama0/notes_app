@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NoteItem extends StatelessWidget {
-  const NoteItem({super.key});
+  const NoteItem({super.key,required this.backgroundColor});
 
+final Color backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 16,top: 24,bottom: 24),
       decoration: BoxDecoration(
-          color: const Color(0xffffcd7b),
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -24,7 +25,7 @@ class NoteItem extends StatelessWidget {
               child: Text(
                 'build your career with Tharwat Samy',
                 style:
-                    TextStyle(fontSize: 20, color: Colors.black.withOpacity(.5)),
+                    TextStyle(fontSize: 18, color: Colors.black.withOpacity(.5)),
               ),
             ),
             trailing: IconButton(
