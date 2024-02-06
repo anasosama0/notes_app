@@ -1,8 +1,10 @@
-
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/cubit/add_note_cubit.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'custom_button.dart';
 import 'custom_text_field.dart';
+
 class AddNoteForm extends StatefulWidget {
   const AddNoteForm({
     super.key,
@@ -13,8 +15,7 @@ class AddNoteForm extends StatefulWidget {
 }
 
 class _AddNoteFormState extends State<AddNoteForm> {
-
-  final GlobalKey <FormState> formkey = GlobalKey();
+  final GlobalKey<FormState> formkey = GlobalKey();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   String? title, subTitle;
@@ -37,30 +38,36 @@ class _AddNoteFormState extends State<AddNoteForm> {
           ),
           CustomTextField(
             onSaved: (value) {
-              title = value;
+              subTitle = value;
             },
             hint: 'Content',
             maxLines: 5,
           ),
-          const SizedBox(height: 32,),
+          const SizedBox(
+            height: 32,
+          ),
           CustomButton(
             onTap: () {
-              if (formkey.currentState!.validate())
-              {
+              if (formkey.currentState!.validate()) {
                 formkey.currentState!.save();
-              }
-              else{
+                var notesModel = NoteModel(
+                    title: title!,
+                    subTitle: subTitle!,
+                    date: DateTime.now().toString(),
+                    color: Colors.white.value);
+
+                    BlocProvider.of<AddNoteCubit>(context).addNote(notesModel);
+              } else {
                 autovalidateMode = AutovalidateMode.always;
-                setState(() {
-                  
-                });
+                setState(() {});
               }
             },
           ),
-          const SizedBox(height: 32,)
+          const SizedBox(
+            height: 32,
+          )
         ],
       ),
     );
   }
 }
-
